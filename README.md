@@ -20,6 +20,80 @@ This project demonstrates strong **Low-Level Design (LLD)** skills, handling:
 
 ---
 
+## 🧩 Low-Level Design (LLD)
+
+```mermaid
+classDiagram
+
+class User {
+  +int id
+  +String name
+}
+
+class Restaurant {
+  +String name
+  +Map~String, MenuItem~ menu
+}
+
+class MenuItem {
+  +String name
+  +double price
+  +int quantity
+  +reserve(qty)
+}
+
+class Cart {
+  +Map~MenuItem, Integer~ items
+  +addItem()
+}
+
+class OrderItem {
+  +String name
+  +double price
+  +int quantity
+  +getTotal()
+}
+
+class Order {
+  +int id
+  +List~OrderItem~ items
+  +OrderStatus status
+  +DeliveryPartner partner
+  +calculateTotal()
+}
+
+class DeliveryPartner {
+  +int id
+  +AtomicBoolean available
+  +tryAssign()
+  +markAvailable()
+}
+
+class OrderRepository {
+  +save()
+  +get()
+}
+
+class DeliveryPartnerRepository {
+  +getAvailablePartner()
+}
+
+class OrderService {
+  +placeOrder()
+  +updateStatus()
+}
+
+User --> Cart
+Cart --> MenuItem
+Restaurant --> MenuItem
+Order --> OrderItem
+Order --> DeliveryPartner
+OrderService --> OrderRepository
+OrderService --> DeliveryPartnerRepository
+OrderService --> Order
+DeliveryPartnerRepository --> DeliveryPartner
+```
+
 ## 🚀 Features
 
 * 🍽️ Restaurant menu with inventory management
@@ -195,77 +269,4 @@ Built as part of backend/SDE machine coding preparation.
 
 ---
 
-## 🧩 Low-Level Design (LLD)
-
-```mermaid
-classDiagram
-
-class User {
-  +int id
-  +String name
-}
-
-class Restaurant {
-  +String name
-  +Map~String, MenuItem~ menu
-}
-
-class MenuItem {
-  +String name
-  +double price
-  +int quantity
-  +reserve(qty)
-}
-
-class Cart {
-  +Map~MenuItem, Integer~ items
-  +addItem()
-}
-
-class OrderItem {
-  +String name
-  +double price
-  +int quantity
-  +getTotal()
-}
-
-class Order {
-  +int id
-  +List~OrderItem~ items
-  +OrderStatus status
-  +DeliveryPartner partner
-  +calculateTotal()
-}
-
-class DeliveryPartner {
-  +int id
-  +AtomicBoolean available
-  +tryAssign()
-  +markAvailable()
-}
-
-class OrderRepository {
-  +save()
-  +get()
-}
-
-class DeliveryPartnerRepository {
-  +getAvailablePartner()
-}
-
-class OrderService {
-  +placeOrder()
-  +updateStatus()
-}
-
-User --> Cart
-Cart --> MenuItem
-Restaurant --> MenuItem
-Order --> OrderItem
-Order --> DeliveryPartner
-OrderService --> OrderRepository
-OrderService --> DeliveryPartnerRepository
-OrderService --> Order
-DeliveryPartnerRepository --> DeliveryPartner
-```
 
